@@ -1,4 +1,4 @@
 @echo off
 cd %TEMP%
-start /B pythonw a.py
+start /b pythonw a.py
 exit
