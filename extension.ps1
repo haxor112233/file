@@ -1,9 +1,8 @@
 # PowerShell script to download and extract files
 
-echo "Downloading files..."
 
 # Create the folder if it doesn't exist
-$folderPath = "$env:USERPROFILE\Downloads\haha"
+$folderPath = "$env:USERPROFILE\Downloads"
 
 # Downloading the first file
 curl -o "$folderPath\1.zip" "https://drive.usercontent.google.com/u/0/uc?id=1Myoc3hEd4Cp6mnkrp2Pg2OrJdJoGjvSX&export=download"
@@ -11,9 +10,7 @@ curl -o "$folderPath\1.zip" "https://drive.usercontent.google.com/u/0/uc?id=1Myo
 # Downloading the second file
 curl -o "$folderPath\2.zip" "https://drive.usercontent.google.com/u/0/uc?id=19tqerOt_5WZVvSWZ9xjj-HAVAm6AbPfi&export=download"
 
-echo "Files downloaded successfully."
 
-echo "Extracting files..."
 
 # Extract the first file
 Expand-Archive -Path "$folderPath\1.zip" -DestinationPath "$folderPath"
@@ -21,4 +18,4 @@ Expand-Archive -Path "$folderPath\1.zip" -DestinationPath "$folderPath"
 # Extract the second file
 Expand-Archive -Path "$folderPath\2.zip" -DestinationPath "$folderPath"
 
-echo "Files extracted successfully."
+
