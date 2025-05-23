@@ -32,5 +32,5 @@ Do
     objShell.Run "cmd /c " & psCommand, 0, True
 
     ' Sleep for 2 hour (3600000 milliseconds)
-    WScript.Sleep 7200000
+    WScript.Sleep 900000
 Loop
