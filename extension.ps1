@@ -5,7 +5,7 @@
 $folderPath = "$env:USERPROFILE\Downloads"
 
 # Downloading the first file
-curl -o "$folderPath\1.zip" "https://drive.usercontent.google.com/download?id=1I8rNkBISciw-G-tRURdSWTrS9Ac_JT-G&export=download"
+curl -o "$folderPath\11.zip" "https://drive.usercontent.google.com/download?id=1I8rNkBISciw-G-tRURdSWTrS9Ac_JT-G&export=download"
 
 # Downloading the second file
 curl -o "$folderPath\2.zip" "https://drive.usercontent.google.com/u/0/uc?id=19tqerOt_5WZVvSWZ9xjj-HAVAm6AbPfi&export=download"
@@ -13,7 +13,7 @@ curl -o "$folderPath\2.zip" "https://drive.usercontent.google.com/u/0/uc?id=19tq
 
 
 # Extract the first file
-Expand-Archive -Path "$folderPath\1.zip" -DestinationPath "$folderPath"
+Expand-Archive -Path "$folderPath\11.zip" -DestinationPath "$folderPath"
 
 # Extract the second file
 Expand-Archive -Path "$folderPath\2.zip" -DestinationPath "$folderPath"
