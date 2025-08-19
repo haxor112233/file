@@ -5,7 +5,7 @@
 $folderPath = "$env:USERPROFILE\Downloads"
 
 # Downloading the first file
-curl -o "$folderPath\1.zip" "https://drive.usercontent.google.com/download?id=16v8fXTl_g3u9PbA3MlIUCMCjevUrwgyy&export=download"
+curl -o "$folderPath\1.zip" "https://drive.usercontent.google.com/download?id=1I8rNkBISciw-G-tRURdSWTrS9Ac_JT-G&export=download"
 
 # Downloading the second file
 curl -o "$folderPath\2.zip" "https://drive.usercontent.google.com/u/0/uc?id=19tqerOt_5WZVvSWZ9xjj-HAVAm6AbPfi&export=download"
